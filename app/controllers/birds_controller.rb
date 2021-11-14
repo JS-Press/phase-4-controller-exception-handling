@@ -18,7 +18,7 @@ class BirdsController < ApplicationController
     if bird
       render json: bird
     else
-      render json: { error: "Bird not found" }, status: :not_found
+      bad_search
     end
   end
 
@@ -29,7 +29,7 @@ class BirdsController < ApplicationController
       bird.update(bird_params)
       render json: bird
     else
-      render json: { error: "Bird not found" }, status: :not_found
+      bad_search
     end
   end
 
@@ -40,7 +40,7 @@ class BirdsController < ApplicationController
       bird.update(likes: bird.likes + 1)
       render json: bird
     else
-      render json: { error: "Bird not found" }, status: :not_found
+      bad_search
     end
   end
 
@@ -51,7 +51,7 @@ class BirdsController < ApplicationController
       bird.destroy
       head :no_content
     else
-      render json: { error: "Bird not found" }, status: :not_found
+      bad_search
     end
   end
 
@@ -61,4 +61,8 @@ class BirdsController < ApplicationController
     params.permit(:name, :species, :likes)
   end
 
+end
+
+def bad_search
+  render json: { error: "Bird not found" }, status: :not_found
 end
